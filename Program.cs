@@ -30,7 +30,7 @@ namespace OpTable
             }
             OperationTable<Fraction> t1 =
             new OperationTable<Fraction>(row_values, col_values, (x, y) => x + y);
-            t1.Print();
+            t1.Print(10);
 
             //List<double> rowValues = new List<double> { 1.7, 2.0, 3.7, 4.6 };
             //List<double> columnValues = new List<double> { 0.5, 1.5, 2.8 };
@@ -38,11 +38,11 @@ namespace OpTable
 
             // יצירת טבלת פעולות עבור החיבור
             DoubleOperationTable additionTable = new DoubleOperationTable(8, 9, Add);
-            additionTable.Print(); // הדפסת הטבלה עם רוחב עמודה 10
+            additionTable.Print(10); // הדפסת הטבלה עם רוחב עמודה 10
 
             // יצירת טבלת פעולות עבור הכפל
             DoubleOperationTable multiplicationTable = new DoubleOperationTable(4, 3, (double a, double b) => a * b);
-            multiplicationTable.Print();
+            multiplicationTable.Print(5);
         }
     }
 
@@ -85,11 +85,10 @@ namespace OpTable
             }
         }
 
-        public void Print()
+        public void Print(int cellWidth)
         {
             Console.WriteLine($"==== table ======");
-
-            if ((row_values is null) || (col_values is null) || (values is null))
+            if (row_values == null || col_values == null || values == null)
             {
                 return;
             }
@@ -97,26 +96,27 @@ namespace OpTable
             int rows = values.GetLength(0);
             int cols = values.GetLength(1);
 
-            Console.Write($"      : ");
-            Console.Write($"{col_values[0],5}");
+            //Console.Write($"{"",cellWidth} : ");
+            Console.Write($"{string.Format($"{{0,{cellWidth}}}", col_values[0])}");
             for (int c = 1; c < cols; c++)
             {
-                Console.Write($" | {col_values[c],5}");
+                Console.Write($" | {string.Format($"{{0,{cellWidth}}}", col_values[c])}");
             }
             Console.WriteLine();
+
             for (int c = 0; c < cols; c++)
             {
-                Console.Write($"---------");
+                Console.Write($"{new string('-', cellWidth + 3)}");
             }
             Console.WriteLine();
 
             for (int r = 0; r < rows; r++)
             {
-                Console.Write($"{row_values[r],5} : ");
-                Console.Write($"{values[r, 0],5}");
+                Console.Write($"{string.Format($"{{0,{cellWidth}}}", row_values[r])} : ");
+                Console.Write($"{string.Format($"{{0,{cellWidth}}}", values[r, 0])}");
                 for (int c = 1; c < cols; c++)
                 {
-                    Console.Write($" | {values[r, c],5}");
+                    Console.Write($" | {string.Format($"{{0,{cellWidth}}}", values[r, c])}");
                 }
                 Console.WriteLine();
             }
