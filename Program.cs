@@ -32,18 +32,17 @@ namespace OpTable
             new OperationTable<Fraction>(row_values, col_values, (x, y) => x + y);
             t1.Print();
 
-            List<double> rowValues = new List<double> { 1.0, 2.0, 3.0, 4.0 };
-            List<double> columnValues = new List<double> { 0.5, 1.5, 2.5 };
+            //List<double> rowValues = new List<double> { 1.7, 2.0, 3.7, 4.6 };
+            //List<double> columnValues = new List<double> { 0.5, 1.5, 2.8 };
+           
 
             // יצירת טבלת פעולות עבור החיבור
-            DoubleOperationTable additionTable = new DoubleOperationTable(rowValues, columnValues, Add);
-           // Console.WriteLine("Addition Table:");
+            DoubleOperationTable additionTable = new DoubleOperationTable(8, 9, Add);
             additionTable.Print(); // הדפסת הטבלה עם רוחב עמודה 10
 
             // יצירת טבלת פעולות עבור הכפל
-            DoubleOperationTable multiplicationTable = new DoubleOperationTable(rowValues, columnValues, (double a, double b) => a * b);
-           // Console.WriteLine("\nMultiplication Table:");
-            multiplicationTable.Print(); // הדפסת הטבלה עם רוחב עמודה 10
+            DoubleOperationTable multiplicationTable = new DoubleOperationTable(4, 3, (double a, double b) => a * b);
+            multiplicationTable.Print();
         }
     }
 
@@ -68,7 +67,7 @@ namespace OpTable
             col_values = _col_values;
             InitializeTable();
         }
-        private void InitializeTable()
+        public void InitializeTable()
         {
             int rows = row_values.Count;
             int cols = col_values.Count;
@@ -125,27 +124,37 @@ namespace OpTable
 
     }
 
-    class DoubleOperationTable : OperationTable<double>
-    {
-        public DoubleOperationTable(List<double> rowValues, List<double> columnValues, OpFunc op)
-     : base(rowValues, columnValues, op)
+          class DoubleOperationTable : OperationTable<double>
         {
-            // אתחול המערך values
-            int rows = rowValues.Count;
-            int columns = columnValues.Count;
-            values = new double[rows, columns];
-
-            // מילוי הערכים במערך values בהתאם לפונקציה
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < columns; j++)
-                {
-                    // הפעלת הפונקציה על הערכים בשורה i ובעמודה j
-                    values[i, j] = op(rowValues[i], columnValues[j]);
-                }
-            }
+            public DoubleOperationTable(int rows, int columns, OpFunc op) 
+        : base(GenerateRowValues(rows), GenerateColumnValues(columns), op)
+        {
+         
         }
 
       
+
+        private static List<double> GenerateRowValues(int rows)
+        {
+            List<double> rowValues = new List<double>();
+            for (int i = 0; i < rows; i++)
+            {
+                rowValues.Add(i + 1.5); 
+            }
+            return rowValues;
+        }
+
+        private static List<double> GenerateColumnValues(int columns)
+        {
+            List<double> colValues = new List<double>();
+            for (int i = 0; i < columns; i++)
+            {
+                colValues.Add(i + 1.7); 
+            }
+            return colValues;
+        }
     }
+
+
+    //}
 }
