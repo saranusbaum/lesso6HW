@@ -40,7 +40,7 @@ namespace OpTable
             DoubleOperationTable additionTable = new DoubleOperationTable(8, 9, Add);
             additionTable.Print(10); // הדפסת הטבלה עם רוחב עמודה 10
 
-            // יצירת טבלת פעולות עבור הכפל
+            // יצירת טבלת פעולות עבור הכפל בפונקציה למבדה
             DoubleOperationTable multiplicationTable = new DoubleOperationTable(4, 3, (double a, double b) => a * b);
             multiplicationTable.Print(5);
         }
@@ -48,10 +48,10 @@ namespace OpTable
 
     class OperationTable<T>
     {
-        // the followng line defines a _type_ op_func
+        
         public delegate T OpFunc(T x, T y);
 
-        // the following line defines a variable of type op_func
+        
         public OpFunc op;
 
         protected T[,]? values = null;
@@ -62,7 +62,7 @@ namespace OpTable
         public OperationTable(List<T> _row_values, List<T> _col_values, OpFunc _op)
         {
             op = _op;
-            // --> exercise: complete this function
+           
             row_values = _row_values;
             col_values = _col_values;
             InitializeTable();
@@ -72,10 +72,9 @@ namespace OpTable
             int rows = row_values.Count;
             int cols = col_values.Count;
 
-            // אתחול המערך values
+          
             values = new T[rows, cols];
 
-            // מילוי הערכים במערך values בהתאם לפונקציה או האופרטור שהועבר
             for (int r = 0; r < rows; r++)
             {
                 for (int c = 0; c < cols; c++)
